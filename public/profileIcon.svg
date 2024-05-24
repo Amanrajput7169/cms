@@ -1,0 +1,15 @@
+<!-- public/icons/profileIcon.svg -->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 24 24"
+  stroke="currentColor"
+  class="w-6 h-6"
+>
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    d="M5.121 17.804A9.003 9.003 0 0112 15c2.133 0 4.1.746 5.657 1.999M15 10a3 3 0 11-6 0 3 3 0 016 0zm-7.5 0a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"
+  />
+</svg>
