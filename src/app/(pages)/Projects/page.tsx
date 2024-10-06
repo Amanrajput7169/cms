@@ -194,8 +194,6 @@ const Page: React.FC = () => {
     setShowFilterOptions(false);
   };
 
-
-
   return (
     <div className=" w-full  relative z-[10]">
     <div className="w-full max-container">
@@ -233,7 +231,7 @@ const Page: React.FC = () => {
                       onClick={toggleFilterOptions}
                       className="flex flex-row font-bold m-0 p-0 cursor-pointer"
                     >
-                      <span className="hidden  text-lg  md:block">Filter </span>
+                      <span className="hidden  text-lg  md:block" id="filter">Filter </span>
                       <Image
                         src="/filter.svg"
                         alt="filter"

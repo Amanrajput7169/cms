@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { auth } from '../app/(pages)/LoginSignup/firebase'; // Adjust the import according to your project structure
 import { signOut } from 'firebase/auth';
 import Image from 'next/image';
-import profileIcon from 'profileIcon.svg'; // Add your profile icon path
+import mode_toggle from '../app/(pages)/LoginSignup/Assets/day-mode.png'
 import { useRouter } from 'next/navigation';
 
 function NavBar() {
   const [user, setUser] = useState<any>(null);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +28,13 @@ function NavBar() {
       console.error('Error logging out:', error.message);
     }
   };
+
+  const handleModeToggle = () => {
+    setDarkMode(!darkMode);
+    document.body.style.backgroundColor = darkMode ? 'White' : 'Black';
+    document.body.style.color = darkMode ? 'Black' : 'White'; // Optionally change text color
+  };
+
 
   return (
     <div className='w-full p-2 bg-[#11232e] mt-0 flex justify-between sticky z-[20] items-center'>
@@ -54,6 +62,7 @@ function NavBar() {
           <>
             <Link href='/LoginSignup' className='bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl m-4'>Sign up</Link>
             <Link href='/LoginSignup' className='bg-pink-500 hover:bg-pink-300 text-white font-semibold px-4 py-2 rounded-xl ml-4'>Login</Link>
+            <Image src={mode_toggle} width={35} height={30} id="mode" className='rounded-full' alt="mode" style={{alignSelf: 'center',marginLeft:'30px',marginRight:'25px' }} onClick={handleModeToggle}/>
           </>
         )}
       </div>
