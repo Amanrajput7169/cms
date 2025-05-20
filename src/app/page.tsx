@@ -1,8 +1,18 @@
+'use client';
 import Image from "next/image";
 import Section2 from "../components/Section2";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { auth } from "./(pages)/LoginSignup/firebase";
  
 export default function Home() {
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
   return (
     <>
       <div className="relative bg-slate-400 h-[600px] flex justify-center items-center">
@@ -21,9 +31,15 @@ export default function Home() {
             <p className="text-white   font-semibold  text-xl md:text-xl mb-4">Join CoLabCrafters today and connect with like-minded individuals!</p>
           </div>
           <div className="button-container mt-8  ">
-            <Link href='/LoginSignup' type="button" className="bg-blue-500 hover:bg-[#11232e] text-white font-bold py-2 px-4 rounded-full ">
-              Join Us
-            </Link>
+            {user ? (
+              <button className="bg-gray-400 text-white font-bold py-2 px-4 rounded-full cursor-not-allowed" disabled>
+                Join Us
+              </button>
+            ) : (
+              <Link href='/LoginSignup' type="button" className="bg-blue-500 hover:bg-[#11232e] text-white font-bold py-2 px-4 rounded-full ">
+                Join Us
+              </Link>
+            )}
           </div>
         </div>
       </div>

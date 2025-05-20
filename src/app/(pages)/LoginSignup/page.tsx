@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent,useEffect } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -15,16 +15,23 @@ import user_icon from "./Assets/person.png";
 import email_icon from "./Assets/email.png";
 import password_icon from "./Assets/password.png";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import GoogleButton from "react-google-button";
 
 const LoginSignup: React.FC = () => {
   const router = useRouter();
-  const [action, setAction] = useState<string>("Sign Up");
+  
+  const searchParams = useSearchParams();
+  const urlAction = searchParams.get("action");
+  const [action, setAction] = useState<string>(urlAction === "Login"?"Login":"SignUp");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
-
+    useEffect(() => {
+    if (urlAction === "Login" || urlAction === "SignUp") {
+      setAction(urlAction);
+    }
+  }, [urlAction]);
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
@@ -53,13 +60,14 @@ const LoginSignup: React.FC = () => {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
           UserName: name,
-        });
+        }); 
       }
       console.log("User Registered Successfully!!");
       toast.success("User Registered Successfully!!", {
         position: "top-center",
       });
       setAction("Login");
+       router.replace("/LoginSignup?action=Login");
     } catch (error: any) {
       console.log(error.message);
       toast.error(error.message, {
@@ -178,7 +186,7 @@ const LoginSignup: React.FC = () => {
             />
           </div>
         </div>
-        {action === "Sign Up" ? (
+        {action === "SignUp" ? (
           <div></div>
         ) : (
           <div className="forget-password">
@@ -191,7 +199,7 @@ const LoginSignup: React.FC = () => {
             <div
               className={action === "Login" ? "submit gray" : "submit"}
               onClick={() => {
-                setAction("Sign Up");
+                setAction("SignUp");
               }}
             >
               SignUp
@@ -199,7 +207,7 @@ const LoginSignup: React.FC = () => {
           </button>
           <button type="submit" className="Login">
             <div
-              className={action === "Sign Up" ? "submit gray" : "submit"}
+              className={action === "SignUp" ? "submit gray" : "submit"}
               onClick={() => {
                 setAction("Login");
               }}
